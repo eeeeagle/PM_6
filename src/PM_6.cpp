@@ -34,17 +34,6 @@ std::vector<int> random_int_vector(const size_t size)
 	return vector;
 }
 
-template <typename T>
-SearchStats search(std::vector<T>& data, T value, bool (*search_func)(std::vector<T>& data, T value), std::string name)
-{
-	auto start_time = HRC::now();
-
-	bool is_find = search_func(data, value);
-
-	auto end_time = HRC::now();
-	return SearchStats(is_find, start_time, end_time, name);
-}
-
 int main()
 {
 	const int size = get_value("Enter vector size: ");
@@ -54,12 +43,6 @@ int main()
 	std::cout << std::endl;
 
 	const std::vector vector = random_int_vector(size);
-	/*
-	for (auto& it : vector)
-		std::cout << std::setw(4) << it << std::right;
-	std::cout << std::endl << std::endl;
-	*/
-
 	std::vector<SearchStats> stats;
 
 	std::vector vector_copy = vector;
@@ -71,7 +54,6 @@ int main()
 	vector_copy = vector;
 	stats.push_back(search(vector_copy, value, consistent_fastest_search, "Fastest"));
 
-	
 	std::cout << std::setw(10) << "TYPE" << std::right << " | TIME (ms)" << std::endl
 		<< "-----------|-----------" << std::endl;
 	for (auto& it : stats)

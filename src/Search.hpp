@@ -43,3 +43,14 @@ bool consistent_fastest_search(std::vector<T>& data, T value)
             i++;
     }    
 }
+
+template <typename T>
+SearchStats search(std::vector<T>& data, T value, bool (*search_func)(std::vector<T>& data, T value), std::string name)
+{
+    auto start_time = HRC::now();
+
+    bool is_find = search_func(data, value);
+
+    auto end_time = HRC::now();
+    return SearchStats(is_find, Micro(end_time - start_time).count(), name);
+}
